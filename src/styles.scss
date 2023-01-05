@@ -1,1 +1,28 @@
+@use 'simple_console';
+
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --line-height: 19px;
+  --display-mode: cols; /* -- Internal use */
+  --font-size-change: 1; /* -- Internal use */
+}
+
+body {
+  font-size: 1em;
+  box-sizing: content-box;
+  margin: 0;
+  font-family: Simple Console;
+  color: rgb(200, 200, 200);
+  font-weight: 400;
+  line-height: var(--line-height);
+  background-color: black;
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid red;
+}

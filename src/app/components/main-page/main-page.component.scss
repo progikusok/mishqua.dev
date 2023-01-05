@@ -1,0 +1,24 @@
+:host {
+  height: 100vh;
+  width: 100vw;
+  display: block;
+  overscroll-behavior-y: none;
+}
+
+.container {
+  background-color: inherit;
+  line-height: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  position: absolute;
+  white-space: pre;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  cursor: default !important;
+
+  overflow: hidden;
+}
