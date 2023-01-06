@@ -28,13 +28,14 @@ export class ASCIIClass {
   private radius = 0;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private state: any[] = [];
+  private state: number[][] = [];
   private S = {
     list: Array.from(ASCII_STRING),
     map: new Map(Array.from(ASCII_STRING).map((item, index) => [item, index])),
     length: ASCII_STRING.length,
   };
   private zero = this.S.map.get('0');
+  private space = this.S.map.get(' ');
 
   /** canvas */
   private canvas!: HTMLCanvasElement;
@@ -42,8 +43,8 @@ export class ASCIIClass {
 
   constructor(private readonly output: HTMLElement) {
     this.calculateSizes();
+    this.initializeEmptyState();
     this.bindMouse();
-
     this.initCanvas();
 
     this.update();
@@ -75,8 +76,6 @@ export class ASCIIClass {
 
       this.state.push(new Array(this.cols).fill(' '));
     }
-
-    console.log(this);
   }
 
   private draw(): void {
@@ -98,6 +97,10 @@ export class ASCIIClass {
     // calm down
     for (let i = 0; i < this.rows; ++i) {
       for (let j = 0; j < this.cols; ++j) {
+        if (this.state[i][j] === this.space) {
+          continue;
+        }
+
         if (this.state[i][j] < this.S.length - 1) {
           this.state[i][j] = ++this.state[i][j] % this.S.length;
         }
@@ -123,9 +126,9 @@ export class ASCIIClass {
     for (let i = 0; i < this.rows; ++i) {
       for (let j = 0; j < this.cols; ++j) {
         const dist = Math.sqrt((x - j) * (x - j) + ((y - i) * (y - i)) / this.char.aspect / this.char.aspect);
-        if (dist < this.radius) {
+        if (dist < this.radius && dist !== 0) {
           if ((i + j) % 2) {
-            this.state[i][j] = this.zero;
+            this.state[i][j] = this.zero ?? 1;
           }
         }
       }
@@ -159,7 +162,6 @@ export class ASCIIClass {
     this.ctx.fillRect(0 + shiftCordsX, 0 + shiftCordsY, 16 + shiftCordsX, 8 + shiftCordsY);
 
     const data = this.ctx.getImageData(0, 0, this.cols, this.rows).data;
-    console.log(data);
 
     for (let i = 0; i < this.rows; ++i) {
       for (let j = 0; j < this.cols; ++j) {
@@ -169,6 +171,14 @@ export class ASCIIClass {
         if ((i + j + 1) % 2) {
           this.state[i][j] = symbol;
         }
+      }
+    }
+  }
+
+  private initializeEmptyState(): void {
+    for (let i = 0; i < this.rows; ++i) {
+      for (let j = 0; j < this.cols; ++j) {
+        this.state[i][j] = this.space ?? 1;
       }
     }
   }
