@@ -12,7 +12,7 @@ body {
   box-sizing: content-box;
   margin: 0;
   font-family: Simple Console;
-  color: rgb(200, 200, 200);
+  color: #878787;
   font-weight: 400;
   line-height: var(--line-height);
   background-color: black;
@@ -25,4 +25,5 @@ canvas {
   top: 0;
   left: 0;
   border: 1px solid red;
+  // visibility: hidden;
 }

@@ -5,7 +5,7 @@
   overscroll-behavior-y: none;
 }
 
-.container {
+.span-grid {
   background-color: inherit;
   line-height: inherit;
   font-family: inherit;
@@ -21,4 +21,10 @@
   cursor: default !important;
 
   overflow: hidden;
+}
+
+.canvas-wrapper {
+  canvas {
+    visibility: hidden;
+  }
 }

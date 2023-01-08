@@ -4,7 +4,7 @@ interface Char {
   aspect: number;
 }
 
-const ASCII_STRING = ' .,·-•─~+:;=*π’“”!?#$@aàbcdefghijklmnoòpqrstuüvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ│0123456789%() '
+const ASCII_STRING = ' .,·-•─~+:;=*π’“”!?#$@aàbcdefghijklmnoòpqrstuüvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ│0123456789%. '
   .split('')
   .reverse()
   .join('');
@@ -34,14 +34,14 @@ export class ASCIIClass {
     map: new Map(Array.from(ASCII_STRING).map((item, index) => [item, index])),
     length: ASCII_STRING.length,
   };
-  private zero = this.S.map.get('0');
+  private zero = this.S.map.get(')');
   private space = this.S.map.get(' ');
 
   /** canvas */
-  private canvas!: HTMLCanvasElement;
-  private ctx!: CanvasRenderingContext2D | null;
+  private scaledCanvas!: HTMLCanvasElement;
+  private ctx: CanvasRenderingContext2D | null = null;
 
-  constructor(private readonly output: HTMLElement) {
+  constructor(private readonly output: HTMLElement, private readonly canvas: HTMLCanvasElement | undefined) {
     this.calculateSizes();
     this.initializeEmptyState();
     this.bindMouse();
@@ -128,7 +128,7 @@ export class ASCIIClass {
         const dist = Math.sqrt((x - j) * (x - j) + ((y - i) * (y - i)) / this.char.aspect / this.char.aspect);
         if (dist < this.radius && dist !== 0) {
           if ((i + j) % 2) {
-            this.state[i][j] = this.zero ?? 1;
+            this.state[i][j] = 1;
           }
         }
       }
@@ -139,37 +139,76 @@ export class ASCIIClass {
   }
 
   private initCanvas() {
-    this.canvas = document.createElement('canvas');
-    this.ctx = this.canvas.getContext('2d');
-    this.canvas.width = this.cols;
-    this.canvas.height = this.rows;
+    if (this.canvas === undefined) {
+      return;
+    }
 
-    document.body.appendChild(this.canvas);
+    this.scaledCanvas = document.createElement('canvas');
+    this.scaledCanvas.width = this.cols;
+    this.scaledCanvas.height = this.rows;
+
+    this.ctx = this.scaledCanvas.getContext('2d');
+
+    // const c = this.canvas;
+    // setTimeout(() => {
+    //   // c.width = this.cols;
+    //   // c.height = this.rows;
+    //   c.style.cssText = `width:${this.cols}px;height:${this.rows}px;`;
+    //   this.ctx = c.getContext('2d');
+    // }, 1000);
+
+    // console.log('>>>', this.cols, this.rows, this.canvas);
+
+    // document.body.appendChild(this.scaledCanvas);
   }
 
   private drawCanvas() {
+    if (this.canvas === undefined) {
+      return;
+    }
+
+    // const shiftCordsX = Math.floor(this.cols / 8) + 45 * Math.sin(this.time / 50);
+    // const shiftCordsY = Math.floor(this.rows / 6) + 35 * Math.cos(this.time / 60);
+
+    // this.ctx.fillStyle = '#000000';
+    // this.ctx.fillRect(0, 0, this.cols, this.rows);
+    // this.ctx.fillStyle = '#ffffff';
+    // this.ctx.fillRect(0 + shiftCordsX, 0 + shiftCordsY, 20 + shiftCordsX, 10 + shiftCordsY);
+
+    this.ctx = this.scaledCanvas.getContext('2d');
+
     if (this.ctx === null) {
       return;
     }
 
-    const shiftCordsX = Math.floor(this.cols / 4) + 10 * Math.sin(this.time / 50);
-    const shiftCordsY = Math.floor(this.rows / 4) + 10 * Math.cos(this.time / 50);
+    if (this.canvas.width === 0 || this.canvas.height === 0) {
+      return;
+    }
 
     this.ctx.clearRect(0, 0, this.cols, this.rows);
-    this.ctx.fillStyle = '#000000';
-    this.ctx.fillRect(0, 0, this.cols, this.rows);
-    this.ctx.fillStyle = '#ffffff';
-    this.ctx.fillRect(0 + shiftCordsX, 0 + shiftCordsY, 16 + shiftCordsX, 8 + shiftCordsY);
 
+    this.ctx.drawImage(
+      this.canvas,
+      0,
+      0,
+      this.canvas.width,
+      this.canvas.height,
+      0,
+      0,
+      this.scaledCanvas.width,
+      this.scaledCanvas.height
+    );
     const data = this.ctx.getImageData(0, 0, this.cols, this.rows).data;
 
     for (let i = 0; i < this.rows; ++i) {
       for (let j = 0; j < this.cols; ++j) {
         const k = 4 * (i * this.cols + j);
-        const symbol = Math.floor(mapRange(data[k], 0, 255, 0, this.S.length - 2));
+        // const symbol = Math.floor(mapRange(data[k], 0, 255, 0, this.S.length - 2));
 
         if ((i + j + 1) % 2) {
-          this.state[i][j] = symbol;
+          if (data[k] === 255) {
+            this.state[i][j] = 1;
+          }
         }
       }
     }
