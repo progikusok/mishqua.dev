@@ -11,7 +11,7 @@
           "test",
           "e2e"
         ],
-        "accessToken": "MzhhMTlkNDctNDExMi00OWI0LWI0NTktZjc0ODUxNzcyNzdifHJlYWQtd3JpdGU="
+        "accessToken": "YThkNWI0NTAtNWI2OS00YzRmLTljMWItN2VkNWFkOWE5ZTJmfHJlYWQtd3JpdGU="
       }
     }
   },
@@ -73,6 +73,5 @@
     "@nrwl/angular:component": {
       "style": "scss"
     }
-  },
-  "defaultProject": "mishqua-dev"
+  }
 }
