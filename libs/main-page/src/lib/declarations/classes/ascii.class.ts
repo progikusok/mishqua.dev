@@ -149,7 +149,7 @@ export class ASCIIClass {
     this.scaledCanvas.width = this.cols;
     this.scaledCanvas.height = this.rows;
 
-    this.ctx = this.scaledCanvas.getContext('2d');
+    this.ctx = this.scaledCanvas.getContext('2d', { willReadFrequently: true });
 
     // const c = this.canvas;
     // setTimeout(() => {
@@ -177,7 +177,7 @@ export class ASCIIClass {
     // this.ctx.fillStyle = '#ffffff';
     // this.ctx.fillRect(0 + shiftCordsX, 0 + shiftCordsY, 20 + shiftCordsX, 10 + shiftCordsY);
 
-    this.ctx = this.scaledCanvas.getContext('2d');
+    // this.ctx = this.scaledCanvas.getContext('2d');
 
     if (this.ctx === null) {
       return;
