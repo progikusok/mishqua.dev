@@ -1,6 +1,6 @@
 import { NgModule, Type } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainPageModule } from '@mishqua-dev/main-page';
+import type { MainPageModule } from '@mishqua-dev/main-page';
 
 const routes: Routes = [
   {
