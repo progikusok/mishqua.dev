@@ -30,7 +30,13 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild('outputRef', { static: true }) private readonly outputRef!: ElementRef<HTMLElement>;
   @ViewChild('canvasWrapperRef', { static: true }) private readonly canvasWrapperRef!: ElementRef<HTMLElement>;
 
-  private readonly pointer: PointerState = { x: 0, y: 0, previousX: 0, previousY: 0, radius: 1000 };
+  private readonly pointer: PointerState = {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+    previousX: window.innerWidth / 2,
+    previousY: window.innerHeight / 2,
+    radius: 1000,
+  };
   private readonly gridMetadata$: BehaviorSubject<Nullable<GridMetadata>> = new BehaviorSubject<Nullable<GridMetadata>>(
     null
   );
@@ -66,15 +72,6 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  private subscribeOnWindowSizeChanges(): Subscription {
-    return fromEvent(window, 'resize')
-      .pipe(startWith(undefined), debounceTime(200))
-      .subscribe(() => {
-        this.clearGridState();
-        this.initGridState();
-      });
   }
 
   private clearGridState(): void {
@@ -264,6 +261,15 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
         this.render(gridMetadata);
         this.renderTextDistortion(gridMetadata);
         this.calculatePointerAnimation(gridMetadata);
+      });
+  }
+
+  private subscribeOnWindowSizeChanges(): Subscription {
+    return fromEvent(window, 'resize')
+      .pipe(startWith(undefined), debounceTime(200))
+      .subscribe(() => {
+        this.clearGridState();
+        this.initGridState();
       });
   }
 }
