@@ -52,6 +52,8 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   private rendererCanvasContext: CanvasRenderingContext2D | null = null;
   private textDistortionCanvas: HTMLCanvasElement | undefined = undefined;
 
+  private textAnimationProducer: TextAnimationProducer | undefined = undefined;
+
   private readonly subscription: Subscription = new Subscription();
 
   constructor(
@@ -135,16 +137,33 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
         take(1)
       )
       .subscribe(({ rows, cols }: GridMetadata) => {
-        const textAnimationProducer: TextAnimationProducer = new TextAnimationProducer(
-          this.canvasWrapperRef.nativeElement
-        );
-        this.textDistortionCanvas = textAnimationProducer.canvas;
+        this.textAnimationProducer = new TextAnimationProducer(this.canvasWrapperRef.nativeElement);
+        this.textDistortionCanvas = this.textAnimationProducer.canvas;
 
         this.rendererCanvas = document.createElement('canvas');
         this.rendererCanvas.width = cols;
         this.rendererCanvas.height = rows;
 
         this.rendererCanvasContext = this.rendererCanvas.getContext('2d', { willReadFrequently: true });
+      });
+  }
+
+  private updateTextDistortionAnimation(): void {
+    this.gridMetadata$
+      .pipe(
+        filter((data: Nullable<GridMetadata>): data is GridMetadata => !isNil(data)),
+        take(1)
+      )
+      .subscribe(({ rows, cols }: GridMetadata) => {
+        if (isNil(this.textAnimationProducer) || isNil(this.rendererCanvas)) {
+          return;
+        }
+        this.rendererCanvas.width = cols;
+        this.rendererCanvas.height = rows;
+
+        this.rendererCanvasContext = this.rendererCanvas.getContext('2d', { willReadFrequently: true });
+
+        this.textAnimationProducer?.update();
       });
   }
 
@@ -270,6 +289,8 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.clearGridState();
         this.initGridState();
+        this.updateTextDistortionAnimation();
+        this.pointer.radius = 1000;
       });
   }
 }
