@@ -1,3 +1,5 @@
+@use 'mixins' as *;
+
 :host {
   height: 100vh;
   width: 100vw;
@@ -6,12 +8,12 @@
 
   font-family: 'Ubuntu Mono', monospace;
 
-  font-size: 1em;
+  font-size: 16px;
   box-sizing: content-box;
   margin: 0;
   color: #878787;
   font-weight: 400;
-  line-height: 19px;
+  line-height: 18px;
   background-color: #000;
   overscroll-behavior-y: none;
   overscroll-behavior-x: none;

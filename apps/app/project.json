@@ -17,6 +17,9 @@
         "inlineStyleLanguage": "scss",
         "assets": ["apps/app/src/favicon.ico", "apps/app/src/assets"],
         "styles": ["apps/app/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/common/src/styles"]
+        },
         "scripts": [
           "apps/app/src/libs/blotter/blotter.min.js",
           "apps/app/src/libs/blotter/materials/LiquidDistortMaterial.js"

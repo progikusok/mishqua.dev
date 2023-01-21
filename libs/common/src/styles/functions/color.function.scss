@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use './../maps/colors-map.scss' as *;
+
+@function color($color, $alpha: 1) {
+  $colorsHasKey: map.has-key($colorsMap, #{$color});
+
+  @if (not($colorsHasKey)) {
+    @error '[color] Wrong color key #{$color}';
+  }
+
+  $alphaColorsHasKey: map.has-key($alphaColorsMap, #{$alpha});
+
+  @return rgba(#{var(--color_#{$color})}, $alpha);
+}
