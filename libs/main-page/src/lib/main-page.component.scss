@@ -39,3 +39,63 @@
   position: absolute;
   visibility: hidden;
 }
+
+.text-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: scroll;
+}
+
+.text-container {
+  font-family: 'Ubuntu Mono', monospace;
+
+  padding-top: var(--cell-height, 2ch);
+  padding-bottom: var(--cell-height, 2ch);
+  padding-left: calc(var(--cell-width, 1ch) * 2);
+  padding-right: calc(var(--cell-width, 1ch) * 2);
+
+  opacity: min(var(--cell-width, 0), 1);
+
+  transition: opacity 0.5s 2.7s ease-out;
+
+  color: rgb(210, 210, 210);
+  max-width: calc(var(--cell-width, 0) * 55);
+  cursor: default;
+  user-select: none;
+
+  &__spaces {
+    display: block;
+  }
+
+  &__text {
+    display: inline-flex;
+    flex-flow: wrap;
+  }
+
+  &__text-wrapper {
+    display: contents;
+  }
+
+  &__line {
+    max-width: inherit;
+    overflow: hidden;
+    display: block;
+    color: #878787;
+  }
+}
+
+.tag {
+  background-color: #444;
+  border-radius: 2px;
+}
+
+.link {
+  color: white;
+  background-color: #000;
+  border-radius: 2px;
+  transition: color 0.2s ease;
+  display: inline-block;
+  &:hover {
+    color: blue;
+  }
+}

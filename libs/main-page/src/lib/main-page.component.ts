@@ -11,7 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { isNil, Nullable } from '@bimeister/utilities';
-import { animationFrames, BehaviorSubject, fromEvent, Subscription } from 'rxjs';
+import { animationFrames, BehaviorSubject, fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, filter, map, startWith, switchMap, take } from 'rxjs/operators';
 import { TextAnimationProducer } from './declarations/classes/text-animation-producer.class';
 import { ASCII_PLENTY } from './declarations/constants/ascii-plenty.const';
@@ -29,6 +29,8 @@ import type { PointerState } from './declarations/interfaces/pointer-state.inter
 export class MainPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild('outputRef', { static: true }) private readonly outputRef!: ElementRef<HTMLElement>;
   @ViewChild('canvasWrapperRef', { static: true }) private readonly canvasWrapperRef!: ElementRef<HTMLElement>;
+
+  public readonly technologies: string[] = ['angular', 'vue', 'nuxt', 'sass', 'three.js', 'glsl'];
 
   private readonly pointer: PointerState = {
     x: window.innerWidth / 2,
@@ -58,7 +60,8 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
-    private readonly changeDetectorRef: ChangeDetectorRef
+    private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly hostElement: ElementRef<HTMLElement>
   ) {
     /** To perform animations we need detach Angular  checks */
     this.changeDetectorRef.detach();
@@ -104,6 +107,9 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
     const cellWidth: number = measureDiv.offsetWidth / (countOfSymbols + 1);
     const cellHeight: number = measureDiv.offsetHeight / (countOfSymbols + 1);
+
+    this.hostElement.nativeElement.style.setProperty('--cell-width', `${cellWidth}px`);
+    this.hostElement.nativeElement.style.setProperty('--cell-height', `${cellHeight}px`);
 
     output.removeChild(measureDiv);
 
@@ -165,6 +171,12 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
         this.textAnimationProducer?.update();
       });
+  }
+
+  private updateDefaultPointerState(): void {
+    this.pointer.radius = 1000;
+    this.pointer.x = this.pointer.previousX = window.innerWidth / 2;
+    this.pointer.y = this.pointer.previousY = window.innerHeight / 2;
   }
 
   private render({ rows, cols }: GridMetadata): void {
@@ -264,7 +276,10 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   }
 
   private subscribeOnPointerMoveChanges(): Subscription {
-    return fromEvent<PointerEvent>(this.document, 'pointermove').subscribe((event: PointerEvent) => {
+    return merge(
+      fromEvent<PointerEvent>(this.document, 'pointermove'),
+      fromEvent<TouchEvent>(this.document, 'touchmove').pipe(map((event: TouchEvent) => event.touches[0]))
+    ).subscribe((event: PointerEvent | Touch) => {
       this.pointer.x = event.clientX;
       this.pointer.y = event.clientY;
     });
@@ -290,7 +305,7 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
         this.clearGridState();
         this.initGridState();
         this.updateTextDistortionAnimation();
-        this.pointer.radius = 1000;
+        this.updateDefaultPointerState();
       });
   }
 }

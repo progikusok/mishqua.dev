@@ -2,4 +2,9 @@ body {
   margin: 0;
   overscroll-behavior-x: none;
   overscroll-behavior-y: none;
+  touch-action: none;
+}
+
+.word {
+  background-color: black;
 }
