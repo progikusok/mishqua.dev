@@ -1,6 +1,6 @@
 /**
  * Text distortion animation class.
- * Sorry for ant in this file, but Blotter is just js-file without typings.
+ * Sorry for any in this file, but Blotter is just js-file without typings.
  */
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
