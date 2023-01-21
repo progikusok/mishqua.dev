@@ -1,0 +1,8 @@
+@use 'maps' as *;
+@use 'sass:map';
+
+:root {
+  @each $name, $value in $colorsMap {
+    --color_#{$name}: #{red($value), green($value), blue($value)};
+  }
+}

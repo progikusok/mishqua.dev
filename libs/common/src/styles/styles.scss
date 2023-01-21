@@ -1,3 +1,5 @@
 @use 'mixins' as *;
 @use 'functions' as *;
 @use 'variables' as *;
+
+@use './variables/css-variables.scss';

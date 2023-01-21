@@ -16,7 +16,7 @@
         "tsConfig": "apps/app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/app/src/favicon.ico", "apps/app/src/assets"],
-        "styles": ["apps/app/src/styles.scss"],
+        "styles": ["apps/app/src/styles.scss", "libs/common/src/styles/styles.scss"],
         "stylePreprocessorOptions": {
           "includePaths": ["libs/common/src/styles"]
         },

@@ -1,4 +1,6 @@
 @use 'mixins' as *;
+@use 'functions' as *;
+@use 'variables' as *;
 
 :host {
   height: 100vh;
@@ -11,12 +13,41 @@
   font-size: 16px;
   box-sizing: content-box;
   margin: 0;
-  color: #878787;
-  font-weight: 400;
-  line-height: 18px;
-  background-color: #000;
+  color: color(neutral-70);
+  line-height: 1.125;
+  background-color: color(neutral-1050);
   overscroll-behavior-y: none;
   overscroll-behavior-x: none;
+
+  @include width-between-property(
+    $property: 'font-size',
+    $width-start: 375,
+    $value-start: 14,
+    $width-end: 1599,
+    $value-end: 16,
+    $is-save-width-before: true,
+    $is-save-width-after: false
+  );
+
+  @include width-between-property(
+    $property: 'font-size',
+    $width-start: 1600,
+    $value-start: 16,
+    $width-end: 1919,
+    $value-end: 18,
+    $is-save-width-before: false,
+    $is-save-width-after: false
+  );
+
+  @include width-between-property(
+    $property: 'font-size',
+    $width-start: 1920,
+    $value-start: 18,
+    $width-end: 2560,
+    $value-end: 20,
+    $is-save-width-before: false,
+    $is-save-width-after: false
+  );
 }
 
 .span-grid {
@@ -60,10 +91,14 @@
 
   transition: opacity 0.5s 2.7s ease-out;
 
-  color: rgb(210, 210, 210);
+  color: color(neutral-8);
   max-width: calc(var(--cell-width, 0) * 55);
   cursor: default;
   user-select: none;
+
+  @include xs() {
+    max-width: calc(var(--cell-width, 0) * 46);
+  }
 
   &__spaces {
     display: block;
@@ -82,22 +117,22 @@
     max-width: inherit;
     overflow: hidden;
     display: block;
-    color: #878787;
+    color: color(neutral-70);
   }
 }
 
 .tag {
-  background-color: #444;
+  background-color: color(neutral-500);
   border-radius: 2px;
 }
 
 .link {
-  color: white;
-  background-color: #000;
+  color: color(neutral-1);
+  background-color: color(neutral-1050);
   border-radius: 2px;
   transition: color 0.2s ease;
   display: inline-block;
   &:hover {
-    color: blue;
+    color: color(primary-500);
   }
 }
