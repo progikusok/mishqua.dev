@@ -1,7 +1,21 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
 import { AppModule } from './app/app.module';
+/* eslint-disable no-console */
+
+const helloConsoleString: string = `
+$$$$$$$$|                                   
+$$  _____|                                  
+$$ |      $$$$$$$|  $$|  $$$$$$|  $$|   $$| 
+$$$$$|    $$  __$$| |__|$$  __$$| $$ |  $$ |
+$$  __|   $$ |  $$ |$$| $$ /  $$ |$$ |  $$ |
+$$ |      $$ |  $$ |$$ |$$ |  $$ |$$ |  $$ |
+$$$$$$$$| $$ |  $$ |$$ ||$$$$$$  ||$$$$$$$ |
+|________||__|  |__|$$ | |______/  |____$$ |
+              $$|   $$ |          $$|   $$ |
+              |$$$$$$  |          |$$$$$$  |
+               |______/            |______/ `;
 
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
+  .then(() => console.log(helloConsoleString))
+  .catch((err: unknown) => console.error(err));
