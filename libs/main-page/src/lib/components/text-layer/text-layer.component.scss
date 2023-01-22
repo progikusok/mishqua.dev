@@ -2,77 +2,6 @@
 @use 'functions' as *;
 @use 'variables' as *;
 
-:host {
-  height: 100vh;
-  width: 100vw;
-  display: block;
-  overscroll-behavior-y: none;
-
-  font-family: 'Ubuntu Mono', monospace;
-
-  font-size: 16px;
-  box-sizing: content-box;
-  margin: 0;
-  color: color(neutral-70);
-  line-height: 1.125;
-  background-color: color(neutral-1050);
-  overscroll-behavior-y: none;
-  overscroll-behavior-x: none;
-
-  @include width-between-property(
-    $property: 'font-size',
-    $width-start: 375,
-    $value-start: 14,
-    $width-end: 1599,
-    $value-end: 16,
-    $is-save-width-before: true,
-    $is-save-width-after: false
-  );
-
-  @include width-between-property(
-    $property: 'font-size',
-    $width-start: 1600,
-    $value-start: 16,
-    $width-end: 1919,
-    $value-end: 18,
-    $is-save-width-before: false,
-    $is-save-width-after: false
-  );
-
-  @include width-between-property(
-    $property: 'font-size',
-    $width-start: 1920,
-    $value-start: 18,
-    $width-end: 2560,
-    $value-end: 20,
-    $is-save-width-before: false,
-    $is-save-width-after: false
-  );
-}
-
-.span-grid {
-  background-color: inherit;
-  line-height: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  position: absolute;
-  white-space: pre;
-  margin: 0;
-  padding: 0;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  cursor: default !important;
-
-  overflow: hidden;
-}
-
-.canvas-wrapper {
-  position: absolute;
-  visibility: hidden;
-}
-
 .text-overlay {
   position: absolute;
   inset: 0;
@@ -150,7 +79,7 @@
     content: '⠋';
   }
 
-  animation: loading 3.4s steps(1) 4s 1 normal both;
+  animation: loading 3s steps(1) 4s 1 normal both;
 }
 
 .paragraph {
@@ -160,15 +89,15 @@
   }
 
   &.paragraph-2 {
-    animation: heightBlink 0s steps(1) 6.3s 1 normal both;
+    animation: heightBlink 0s steps(1) 5.8s 1 normal both;
   }
 
   &.paragraph-3 {
-    animation: heightBlink 0s steps(1) 7s 1 normal both;
+    animation: heightBlink 0s steps(1) 6.4s 1 normal both;
   }
 
   &.paragraph-4 {
-    animation: heightBlink 0s steps(1) 7.4s 1 normal both;
+    animation: heightBlink 0s steps(1) 7s 1 normal both;
   }
 }
 
@@ -194,10 +123,8 @@
     border-right: var(--cell-width, 1ch) solid transparent;
     white-space: nowrap;
 
-    --animation-state: running;
     width: 0;
-    animation: typing 2s steps(14, end) 1s 1 normal both, blinkCaret 0.5s steps(14) 8;
-    animation-play-state: var(--animation-state);
+    animation: typing 0.5s steps(14, end) 1s 1 normal both, blinkCaret 0.5s steps(14) 3;
   }
 }
 

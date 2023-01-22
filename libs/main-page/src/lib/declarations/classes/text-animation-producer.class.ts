@@ -17,7 +17,7 @@ export class TextAnimationProducer {
   }
 
   public init(): void {
-    this.text = new Blotter.Text('Hello', {
+    this.text = new Blotter.Text(this.getTextValue(), {
       size: 120,
       fill: 'white',
       weight: 900,
@@ -40,8 +40,12 @@ export class TextAnimationProducer {
   }
 
   public update(): void {
-    this.text.value = window.innerWidth < window.innerHeight ? 'Hi' : 'Hello';
+    this.text.value = this.getTextValue();
     this.text.needsUpdate = true;
     this.scope.needsUpdate = true;
+  }
+
+  private getTextValue(): string {
+    return window.innerWidth < window.innerHeight ? 'Hi' : 'Hello';
   }
 }

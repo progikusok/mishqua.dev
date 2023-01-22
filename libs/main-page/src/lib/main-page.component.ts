@@ -11,13 +11,16 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { isNil, Nullable } from '@bimeister/utilities';
-import { animationFrames, BehaviorSubject, fromEvent, merge, Subscription } from 'rxjs';
+import { animationFrames, BehaviorSubject, fromEvent, merge, Subscription, timer } from 'rxjs';
 import { debounceTime, filter, map, startWith, switchMap, take } from 'rxjs/operators';
 import { TextAnimationProducer } from './declarations/classes/text-animation-producer.class';
 import { ASCII_PLENTY } from './declarations/constants/ascii-plenty.const';
 import type { AsciiPlentyData } from './declarations/interfaces/ascii-plenty-data.interface';
 import type { GridMetadata } from './declarations/interfaces/grid-metadata.interface';
 import type { PointerState } from './declarations/interfaces/pointer-state.interface';
+
+const INIT_ANIMATION_DELAY_MS: number = 2000;
+const INIT_TEXT_DISTORTION_DELAY_MS: number = 1000;
 
 @Component({
   selector: 'app-main-page',
@@ -33,11 +36,11 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   public readonly technologies: string[] = ['angular', 'vue', 'nuxt', 'sass', 'three.js', 'glsl'];
 
   private readonly pointer: PointerState = {
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-    previousX: window.innerWidth / 2,
-    previousY: window.innerHeight / 2,
-    radius: 1000,
+    x: 0,
+    y: 0,
+    previousX: 0,
+    previousY: 0,
+    radius: 0,
   };
   private readonly gridMetadata$: BehaviorSubject<Nullable<GridMetadata>> = new BehaviorSubject<Nullable<GridMetadata>>(
     null
@@ -56,6 +59,7 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
   private textAnimationProducer: TextAnimationProducer | undefined = undefined;
 
+  private readonly isReady$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly subscription: Subscription = new Subscription();
 
   constructor(
@@ -68,11 +72,20 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit(): void {
-    this.initTextDistortionCanvas();
-
     this.subscription.add(this.subscribeOnWindowSizeChanges());
-    this.subscription.add(this.produceRequestAnimationFrame());
-    this.subscription.add(this.subscribeOnPointerMoveChanges());
+
+    this.isReady$
+      .pipe(
+        filter((value: boolean) => value),
+        take(1),
+        switchMap(() => timer(INIT_ANIMATION_DELAY_MS))
+      )
+      .subscribe(() => {
+        this.initTextDistortionCanvas();
+
+        this.subscription.add(this.produceRequestAnimationFrame());
+        this.subscription.add(this.subscribeOnPointerMoveChanges());
+      });
   }
 
   public ngOnDestroy(): void {
@@ -111,6 +124,9 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
     this.hostElement.nativeElement.style.setProperty('--cell-width', `${cellWidth}px`);
     this.hostElement.nativeElement.style.setProperty('--cell-height', `${cellHeight}px`);
 
+    this.hostElement.nativeElement.classList.add('ready');
+    this.isReady$.next(true);
+
     output.removeChild(measureDiv);
 
     const gridMetadata: GridMetadata = {
@@ -137,8 +153,9 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   }
 
   private initTextDistortionCanvas(): void {
-    this.gridMetadata$
+    timer(INIT_TEXT_DISTORTION_DELAY_MS)
       .pipe(
+        switchMap(() => this.gridMetadata$),
         filter((data: Nullable<GridMetadata>): data is GridMetadata => !isNil(data)),
         take(1)
       )
@@ -242,7 +259,7 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
       for (let j: number = 0; j < cols; ++j) {
         const k: number = 4 * (i * cols + j);
 
-        if ((i + j + 1) % 2 === 1 && data[k] === 255) {
+        if ((i + j) % 2 === 1 && data[k] === 255) {
           this.state[i][j] = this.asciiPlentyData.charToIndexMap.get('.') ?? 1;
         }
       }
@@ -265,7 +282,7 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
           (gridX - j) * (gridX - j) + ((gridY - i) * (gridY - i)) / cell.aspect / cell.aspect
         );
         if (dist < this.pointer.radius && dist !== 0) {
-          if ((i + j) % 2 === 1) {
+          if ((i + j + 1) % 2 === 1) {
             this.state[i][j] = this.asciiPlentyData.charToIndexMap.get('.') ?? 1;
           }
         }
