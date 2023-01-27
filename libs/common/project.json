@@ -5,6 +5,22 @@
   "sourceRoot": "libs/common/src",
   "prefix": "mishqua-dev",
   "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/common/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/common/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/common/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],

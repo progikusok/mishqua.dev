@@ -17,7 +17,9 @@ declare namespace Cypress {
 }
 //
 // -- This is a parent command --
+// eslint-disable-next-line @typescript-eslint/typedef
 Cypress.Commands.add('login', (email, password) => {
+  // eslint-disable-next-line no-console
   console.log('Custom command example: Login', email, password);
 });
 //
