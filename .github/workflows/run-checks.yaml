@@ -49,7 +49,6 @@ jobs:
           path: ./
 
       - uses: nrwl/nx-set-shas@v3
-      - run: npm ci
 
       - run: npx nx workspace-lint
       - run: npx nx format:check
