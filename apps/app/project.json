@@ -22,7 +22,7 @@
         },
         "scripts": [
           "apps/app/src/libs/blotter/blotter.min.js",
-          "apps/app/src/libs/blotter/materials/LiquidDistortMaterial.js"
+          "apps/app/src/libs/blotter/materials/liquidDistortMaterial.js"
         ]
       },
       "configurations": {
