@@ -4,7 +4,11 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
+    "nx": "nx",
     "start": "nx serve app",
+    "start:production": "nx run app:serve:production",
+    "start:production:host": "nx run app:serve:hostProduction",
+    "start:development:host": "nx run app:serve:hostDevelopment",
     "postinstall": "node ./decorate-angular-cli.js"
   },
   "private": true,

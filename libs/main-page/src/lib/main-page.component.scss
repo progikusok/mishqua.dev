@@ -3,7 +3,7 @@
 @use 'variables' as *;
 
 :host {
-  height: 100vh;
+  height: vh(100);
   width: 100vw;
   display: block;
   overscroll-behavior-y: none;
@@ -61,8 +61,10 @@
   padding: 0;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+
+  width: inherit;
+  height: inherit;
+
   cursor: default !important;
 
   overflow: hidden;
@@ -71,210 +73,4 @@
 .canvas-wrapper {
   position: absolute;
   visibility: hidden;
-}
-
-.text-overlay {
-  position: absolute;
-  inset: 0;
-  overflow: scroll;
-}
-
-.text-container {
-  font-family: 'Ubuntu Mono', monospace;
-
-  padding-top: var(--cell-height, 1ch);
-  padding-bottom: var(--cell-height, 1ch);
-  padding-left: calc(var(--cell-width, 1ch) * 2);
-  padding-right: calc(var(--cell-width, 1ch) * 2);
-
-  color: color(neutral-8);
-  max-width: calc(var(--cell-width, 0) * 55);
-  cursor: default;
-  user-select: none;
-
-  display: none;
-
-  @include host-selector('.ready') {
-    display: block;
-  }
-
-  @include xs() {
-    max-width: calc(var(--cell-width, 0) * 46);
-  }
-
-  &__spaces {
-    display: block;
-  }
-
-  &__text {
-    display: inline-flex;
-    flex-flow: wrap;
-  }
-
-  &__text-wrapper {
-    display: contents;
-  }
-
-  &__line {
-    max-width: inherit;
-    overflow: hidden;
-    display: block;
-    color: color(neutral-70);
-  }
-}
-
-.tag {
-  background-color: color(neutral-500);
-  border-radius: 2px;
-}
-
-.link {
-  color: color(neutral-1);
-  background-color: color(neutral-1050);
-  border-radius: 2px;
-  transition: color 0.2s ease;
-  display: inline-block;
-  &:hover {
-    color: color(primary-500);
-  }
-}
-
-.spinner {
-  color: color(success-500);
-  display: flex;
-  align-items: baseline;
-
-  &::before {
-    animation: terminalSpinner 0.8s linear infinite;
-    display: block;
-    content: '⠋';
-  }
-
-  animation: loading 3.4s steps(1) 4s 1 normal both;
-}
-
-.paragraph {
-  overflow: hidden;
-  &.paragraph-1 {
-    animation: heightBlink 0s steps(1) 5s 1 normal both;
-  }
-
-  &.paragraph-2 {
-    animation: heightBlink 0s steps(1) 6.3s 1 normal both;
-  }
-
-  &.paragraph-3 {
-    animation: heightBlink 0s steps(1) 7s 1 normal both;
-  }
-
-  &.paragraph-4 {
-    animation: heightBlink 0s steps(1) 7.4s 1 normal both;
-  }
-}
-
-.command-container {
-  display: none;
-  width: fit-content;
-  color: color(neutral-8);
-
-  padding-top: var(--cell-height, 2ch);
-  padding-left: calc(var(--cell-width, 1ch) * 2);
-
-  @include host-selector('.ready') {
-    display: flex;
-  }
-
-  &__root {
-    color: color(primary-500);
-  }
-
-  &__command {
-    overflow: hidden;
-    display: block;
-    border-right: var(--cell-width, 1ch) solid transparent;
-    white-space: nowrap;
-
-    --animation-state: running;
-    width: 0;
-    animation: typing 2s steps(14, end) 1s 1 normal both, blinkCaret 0.5s steps(14) 8;
-    animation-play-state: var(--animation-state);
-  }
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: calc(var(--cell-width, 1ch) * 13);
-    border: none !important;
-  }
-}
-
-@keyframes blinkCaret {
-  from,
-  to {
-    border-color: color(neutral-1);
-  }
-  50% {
-    border-color: transparent;
-  }
-}
-
-@keyframes heightBlink {
-  from {
-    height: 0;
-  }
-  to {
-    height: auto;
-  }
-}
-
-@keyframes loading {
-  from {
-    opacity: 0;
-  }
-
-  1% {
-    opacity: 1;
-  }
-
-  99% {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-    height: 0;
-  }
-}
-
-@keyframes terminalSpinner {
-  10% {
-    content: '⠙';
-  }
-  20% {
-    content: '⠹';
-  }
-  30% {
-    content: '⠸';
-  }
-  40% {
-    content: '⠼';
-  }
-  50% {
-    content: '⠴';
-  }
-  60% {
-    content: '⠦';
-  }
-  70% {
-    content: '⠧';
-  }
-  80% {
-    content: '⠇';
-  }
-  90% {
-    content: '⠏';
-  }
 }

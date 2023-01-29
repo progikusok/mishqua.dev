@@ -2,8 +2,16 @@
 
 body {
   margin: 0;
-  overscroll-behavior-x: none;
-  overscroll-behavior-y: none;
+
+  &.frozen {
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+    overflow: hidden;
+  }
+
+  &.darken {
+    background-color: color(neutral-1050);
+  }
 }
 
 .word {

@@ -56,10 +56,19 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "app:build:production"
+          "browserTarget": "app:build:production",
+          "host": "192.168.1.65"
         },
         "development": {
           "browserTarget": "app:build:development"
+        },
+        "hostDevelopment": {
+          "browserTarget": "app:build:development",
+          "host": "192.168.1.65"
+        },
+        "hostProduction": {
+          "browserTarget": "app:build:production",
+          "host": "192.168.1.65"
         }
       },
       "defaultConfiguration": "development"

@@ -11,6 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { isNil, Nullable } from '@bimeister/utilities';
+import { UiStateHandlerService } from '@mishqua-dev/common';
 import { animationFrames, BehaviorSubject, fromEvent, merge, Subscription, timer } from 'rxjs';
 import { debounceTime, filter, map, startWith, switchMap, take } from 'rxjs/operators';
 import { TextAnimationProducer } from './declarations/classes/text-animation-producer.class';
@@ -65,10 +66,14 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
     private readonly changeDetectorRef: ChangeDetectorRef,
-    private readonly hostElement: ElementRef<HTMLElement>
+    private readonly hostElement: ElementRef<HTMLElement>,
+    private readonly uiStateHandlerService: UiStateHandlerService
   ) {
     /** To perform animations we need detach Angular  checks */
     this.changeDetectorRef.detach();
+
+    this.uiStateHandlerService.frozeBodyScrolling();
+    this.uiStateHandlerService.darkenBody();
   }
 
   public ngAfterViewInit(): void {
@@ -90,6 +95,9 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
+
+    this.uiStateHandlerService.frozeBodyScrolling(false);
+    this.uiStateHandlerService.darkenBody(false);
   }
 
   private clearGridState(): void {
