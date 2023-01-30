@@ -120,11 +120,16 @@
   &__command {
     overflow: hidden;
     display: block;
-    border-right: var(--cell-width, 1ch) solid transparent;
     white-space: nowrap;
 
     width: 0;
-    animation: typing 0.5s steps(14, end) 1s 1 normal both, blinkCaret 0.5s steps(14) 3;
+    animation: typing 0.5s steps(14, end) 1s 1 normal both;
+  }
+
+  &__caret {
+    content: '';
+    width: var(--cell-width, 1ch);
+    animation: blinkCaret 0.5s steps(14) 5;
   }
 }
 
@@ -141,10 +146,10 @@
 @keyframes blinkCaret {
   from,
   to {
-    border-color: color(neutral-1);
+    background-color: color(neutral-1);
   }
   50% {
-    border-color: transparent;
+    background-color: transparent;
   }
 }
 
