@@ -10,10 +10,10 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { isNil, Nullable } from '@bimeister/utilities';
+import { isEmpty, isNil, Nullable } from '@bimeister/utilities';
 import { UiStateHandlerService } from '@mishqua-dev/common';
 import { animationFrames, BehaviorSubject, fromEvent, merge, Subscription, timer } from 'rxjs';
-import { debounceTime, filter, map, startWith, switchMap, take } from 'rxjs/operators';
+import { debounceTime, filter, map, startWith, switchMap, take, tap } from 'rxjs/operators';
 import { TextAnimationProducer } from './declarations/classes/text-animation-producer.class';
 import { ASCII_PLENTY } from './declarations/constants/ascii-plenty.const';
 import type { AsciiPlentyData } from './declarations/interfaces/ascii-plenty-data.interface';
@@ -22,6 +22,8 @@ import type { PointerState } from './declarations/interfaces/pointer-state.inter
 
 const INIT_ANIMATION_DELAY_MS: number = 2000;
 const INIT_TEXT_DISTORTION_DELAY_MS: number = 1000;
+
+const WINDOW_RESIZE_DEBOUNCE_TIME_MS: number = 500;
 
 @Component({
   selector: 'app-main-page',
@@ -205,6 +207,10 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   }
 
   private render({ rows, cols }: GridMetadata): void {
+    if (isEmpty(this.state)) {
+      return;
+    }
+
     /* draw state */
     for (let i: number = 0; i < rows; ++i) {
       const row: Element = this.outputRef.nativeElement.children[i];
@@ -235,6 +241,10 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   }
 
   private renderTextDistortion({ rows, cols }: GridMetadata): void {
+    if (isEmpty(this.state)) {
+      return;
+    }
+
     if (isNil(this.rendererCanvasContext) || isNil(this.rendererCanvas) || isNil(this.textDistortionCanvas)) {
       return;
     }
@@ -275,6 +285,10 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   }
 
   private calculatePointerAnimation({ cell, rows, cols }: GridMetadata): void {
+    if (isEmpty(this.state)) {
+      return;
+    }
+
     const { x, y, previousX, previousY }: PointerState = this.pointer;
 
     const gridX: number = Math.floor(this.pointer.x / cell.width);
@@ -325,9 +339,12 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
   private subscribeOnWindowSizeChanges(): Subscription {
     return fromEvent(window, 'resize')
-      .pipe(startWith(undefined), debounceTime(200))
+      .pipe(
+        startWith(undefined),
+        tap(() => this.clearGridState()),
+        debounceTime(WINDOW_RESIZE_DEBOUNCE_TIME_MS)
+      )
       .subscribe(() => {
-        this.clearGridState();
         this.initGridState();
         this.updateTextDistortionAnimation();
         this.updateDefaultPointerState();
