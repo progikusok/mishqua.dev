@@ -51,7 +51,7 @@ jobs:
           key: 'application:${{github.sha}}'
           path: ./
 
-      - run: npx nx build app --baseHref="https://progikusok.github.io/mishqua.dev/"
+      - run: npx nx build app --baseHref="https://mishqua.dev/"
       - run: cp ./dist/apps/app/index.html ./dist/apps/app/404.html
 
       - name: Cache dist app
