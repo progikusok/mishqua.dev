@@ -10,9 +10,9 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { isEmpty, isNil, Nullable } from '@bimeister/utilities';
+import { Nullable, isEmpty, isNil } from '@bimeister/utilities';
 import { UiStateHandlerService } from '@mishqua-dev/common';
-import { animationFrames, BehaviorSubject, fromEvent, merge, Subscription, timer } from 'rxjs';
+import { BehaviorSubject, Subscription, animationFrames, fromEvent, merge, timer } from 'rxjs';
 import { debounceTime, filter, map, startWith, switchMap, take, tap } from 'rxjs/operators';
 import { TextAnimationProducer } from './declarations/classes/text-animation-producer.class';
 import { ASCII_PLENTY } from './declarations/constants/ascii-plenty.const';
