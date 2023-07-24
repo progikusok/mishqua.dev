@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "include": ["src/**/*.ts"],
   "compilerOptions": {
+    "ignoreDeprecations": "5.0",
     "types": ["jest", "node"]
   }
 }
