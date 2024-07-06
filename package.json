@@ -6,6 +6,7 @@
     "ng": "nx",
     "nx": "nx",
     "start": "nx serve app",
+    "build": "nx build app",
     "start:production": "nx run app:serve:production",
     "start:production:host": "nx run app:serve:hostProduction",
     "start:development:host": "nx run app:serve:hostDevelopment",
