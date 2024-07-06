@@ -1,20 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "mishqua-dev",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/nx-cloud",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
-        "accessToken": "YThkNWI0NTAtNWI2OS00YzRmLTljMWItN2VkNWFkOWE5ZTJmfHJlYWQtd3JpdGU="
-      }
-    }
-  },
   "targetDefaults": {
     "build": {
       "dependsOn": [
