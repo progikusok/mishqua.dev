@@ -17,3 +17,8 @@ body {
 .word {
   background-color: color(neutral-1050);
 }
+
+.space {
+  width: var(--cell-width);
+  height: 1cap;
+}

@@ -31,7 +31,7 @@ export class SpanTextDirective implements AfterViewInit {
       return;
     }
 
-    const spaceSpan: string = `<span class="space">&nbsp;</span>`;
+    const spaceSpan: string = `<span class="space"></span>`;
 
     const words: string[] = textContent.split(' ');
     const readyHtmlSpansString: string = words
