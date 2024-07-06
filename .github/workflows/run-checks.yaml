@@ -48,7 +48,5 @@ jobs:
           key: 'application:${{github.sha}}'
           path: ./
 
-      - uses: nrwl/nx-set-shas@v3
-
-      - run: npx nx format:check
-      - run: npx nx run-many --targets=lint,build
+      - run: npm run nx format:check
+      - run: npm run nx run-many --targets=lint,build
