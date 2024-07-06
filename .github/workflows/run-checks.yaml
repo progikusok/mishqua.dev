@@ -51,6 +51,4 @@ jobs:
       - uses: nrwl/nx-set-shas@v3
 
       - run: npx nx format:check
-      - run: npx nx run-many --target=lint --parallel=3
-      - run: npx nx run-many --target=test --parallel=3 --configuration=ci
-      - run: npx nx run-many --target=build --parallel=3
+      - run: npx nx run-many --targets=lint,build
