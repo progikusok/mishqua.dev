@@ -54,6 +54,7 @@
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-ban": "^1.6.0",
     "eslint-plugin-cypress": "2.15.2",
+    "eslint-plugin-deprecation": "^3.0.0",
     "eslint-plugin-editorconfig": "^4.0.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsdoc": "^39.6.4",

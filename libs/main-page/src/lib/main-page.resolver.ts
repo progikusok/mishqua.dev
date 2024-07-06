@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import type { Resolve } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import * as WebFont from 'webfontloader';
+import * as webFont from 'webfontloader';
 
 @Injectable({ providedIn: 'root' })
 export class MainPageResolver implements Resolve<void> {
   private readonly resolver$: Subject<void> = new Subject<void>();
 
   public resolve(): Observable<void> | Promise<void> {
-    WebFont.load({
+    webFont.load({
       google: {
         families: ['Ubuntu Mono'],
       },

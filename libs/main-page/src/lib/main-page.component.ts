@@ -27,13 +27,13 @@ const INIT_TEXT_DISTORTION_DELAY_MS: number = 1000;
 const WINDOW_RESIZE_DEBOUNCE_TIME_MS: number = 500;
 
 @Component({
-    selector: 'app-main-page',
-    templateUrl: './main-page.component.html',
-    styleUrls: ['./main-page.component.scss'],
-    encapsulation: ViewEncapsulation.Emulated,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [TextLayerComponent],
+  selector: 'app-main-page',
+  templateUrl: './main-page.component.html',
+  styleUrls: ['./main-page.component.scss'],
+  encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [TextLayerComponent],
 })
 export class MainPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild('outputRef', { static: true }) private readonly outputRef!: ElementRef<HTMLElement>;
