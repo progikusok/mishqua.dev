@@ -9,11 +9,11 @@ on:
       - $default-branch
 
 jobs:
-  install:
+  main:
     name: Install Dependencies
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -26,27 +26,10 @@ jobs:
       - name: Install dependencies by lockfile
         run: npm clean-install
 
-      - name: Cache application
-        uses: actions/cache@v3
-        with:
-          key: 'application:${{github.sha}}'
-          path: ./
+      - uses: nrwl/nx-set-shas@v4
 
-  bundle:
-    name: Build & Checks
-    runs-on: ubuntu-latest
-    needs:
-      - install
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Download cached application
-        uses: actions/cache@v3
-        with:
-          key: 'application:${{github.sha}}'
-          path: ./
-
-      - run: npm run nx format:check
-      - run: npm run nx run-many --targets=lint,build
+      - name: Lint & Build
+        run: npx nx run-many --targets=lint,build
+        
+      - name: Format Check
+        run: npx nx format:check
