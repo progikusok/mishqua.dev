@@ -19,6 +19,7 @@ import { ASCII_PLENTY } from './declarations/constants/ascii-plenty.const';
 import type { AsciiPlentyData } from './declarations/interfaces/ascii-plenty-data.interface';
 import type { GridMetadata } from './declarations/interfaces/grid-metadata.interface';
 import type { PointerState } from './declarations/interfaces/pointer-state.interface';
+import { TextLayerComponent } from './components/text-layer/text-layer.component';
 
 const INIT_ANIMATION_DELAY_MS: number = 2000;
 const INIT_TEXT_DISTORTION_DELAY_MS: number = 1000;
@@ -26,11 +27,13 @@ const INIT_TEXT_DISTORTION_DELAY_MS: number = 1000;
 const WINDOW_RESIZE_DEBOUNCE_TIME_MS: number = 500;
 
 @Component({
-  selector: 'app-main-page',
-  templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-main-page',
+    templateUrl: './main-page.component.html',
+    styleUrls: ['./main-page.component.scss'],
+    encapsulation: ViewEncapsulation.Emulated,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [TextLayerComponent],
 })
 export class MainPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild('outputRef', { static: true }) private readonly outputRef!: ElementRef<HTMLElement>;

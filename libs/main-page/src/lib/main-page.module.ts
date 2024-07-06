@@ -6,7 +6,6 @@ import { MainPageRoutingModule } from './main-page-routing.module';
 import { MainPageComponent } from './main-page.component';
 
 @NgModule({
-  declarations: [MainPageComponent, SpanTextDirective, TextLayerComponent],
-  imports: [CommonModule, MainPageRoutingModule],
+    imports: [CommonModule, MainPageRoutingModule, MainPageComponent, SpanTextDirective, TextLayerComponent],
 })
 export class MainPageModule {}

@@ -3,7 +3,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { isEmpty, isNil } from '@bimeister/utilities';
 
 @Directive({
-  selector: '[spanText]',
+    selector: '[spanText]',
+    standalone: true,
 })
 export class SpanTextDirective implements AfterViewInit {
   @Input() public spanText: any;
