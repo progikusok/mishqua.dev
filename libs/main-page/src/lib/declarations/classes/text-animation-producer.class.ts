@@ -46,6 +46,6 @@ export class TextAnimationProducer {
   }
 
   private getTextValue(): string {
-    return window.innerWidth < window.innerHeight ? 'Hi' : 'Hello';
+    return window.innerWidth < window.innerHeight ? '█' : 'Hello';
   }
 }
