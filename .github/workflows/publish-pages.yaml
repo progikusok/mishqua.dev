@@ -12,11 +12,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  install:
-    name: Install Dependencies
+  main:
+    name: Main
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -29,51 +32,8 @@ jobs:
       - name: Install dependencies by lockfile
         run: npm clean-install
 
-      - name: Cache application
-        uses: actions/cache@v3
-        with:
-          key: 'application:${{github.sha}}'
-          path: ./
-
-  bundle:
-    name: Build & Checks
-    runs-on: ubuntu-latest
-    needs:
-      - install
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Download cached application
-        uses: actions/cache@v3
-        with:
-          key: 'application:${{github.sha}}'
-          path: ./
-
       - run: npx nx build app --baseHref="https://mishqua.dev/"
       - run: cp ./dist/apps/app/index.html ./dist/apps/app/404.html
-
-      - name: Cache dist app
-        uses: actions/cache@v3
-        with:
-          key: 'pages:${{github.sha}}'
-          path: ./dist/apps/app
-
-  deploy:
-    name: Deploy to GitHub Pages
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs:
-      - bundle
-    steps:
-      - name: Download cached pages
-        uses: actions/cache@v3
-        with:
-          key: 'pages:${{github.sha}}'
-          path: ./dist/apps/app
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
