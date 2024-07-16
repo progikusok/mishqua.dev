@@ -6,7 +6,7 @@ import { isEmpty, isNil } from '@bimeister/utilities';
   selector: '[spanText]',
   standalone: true,
 })
-export class SpanTextDirective  {
+export class SpanTextDirective {
   constructor(private readonly hostElement: ElementRef<HTMLElement>, private readonly sanitizer: DomSanitizer) {
     this.setOpacity(0);
     requestAnimationFrame(this.wrapText.bind(this));
@@ -26,7 +26,10 @@ export class SpanTextDirective  {
 
     const words: string[] = textContent.split(' ');
     const readyHtmlSpansString: string = words
-      .map((word: string, index: number) => `<span class="word">${word}</span>${index === words.length - 1 ? '' : spaceSpan}`)
+      .map(
+        (word: string, index: number) =>
+          `<span class="word">${word}</span>${index === words.length - 1 ? '' : spaceSpan}`
+      )
       .join('');
 
     const readyHtmlSpans: string | null = this.sanitizer.sanitize(SecurityContext.HTML, readyHtmlSpansString);

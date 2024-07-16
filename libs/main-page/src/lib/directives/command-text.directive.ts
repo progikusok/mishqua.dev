@@ -6,7 +6,7 @@ import { isEmpty, isNil } from '@bimeister/utilities';
   selector: '[commandText]',
   standalone: true,
 })
-export class CommandTextDirective  {
+export class CommandTextDirective {
   constructor(private readonly hostElement: ElementRef<HTMLElement>, private readonly sanitizer: DomSanitizer) {
     requestAnimationFrame(this.wrapText.bind(this));
   }
@@ -19,7 +19,6 @@ export class CommandTextDirective  {
 
     const userName: string = Telegram?.WebApp?.initDataUnsafe?.user?.first_name ?? '';
 
-
     const readyHtml: string | null = this.sanitizer.sanitize(SecurityContext.HTML, `${textContent}&nbsp;${userName}`);
 
     if (isNil(readyHtml)) {
@@ -27,6 +26,6 @@ export class CommandTextDirective  {
     }
 
     this.hostElement.nativeElement.innerHTML = readyHtml;
-    this.hostElement.nativeElement.style.setProperty('--text-len', textContent.length + userName.length + '');
+    this.hostElement.nativeElement.style.setProperty('--text-len', `${textContent.length + userName.length}`);
   }
 }
