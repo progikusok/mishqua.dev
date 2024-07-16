@@ -25,8 +25,6 @@ export class CommandTextDirective {
       return;
     }
 
-    console.log('>>>', {textContent, tl: textContent.length, userName, ul: userName.length, total: textContent.length + userName.length + 1});
-
     this.hostElement.nativeElement.innerHTML = readyHtml;
     this.hostElement.nativeElement.style.setProperty('--text-len', `${textContent.length + userName.length + 1}`);
   }
