@@ -26,6 +26,6 @@ export class CommandTextDirective {
     }
 
     this.hostElement.nativeElement.innerHTML = readyHtml;
-    this.hostElement.nativeElement.style.setProperty('--text-len', `${textContent.length + userName.length}`);
+    this.hostElement.nativeElement.style.setProperty('--text-len', `${textContent.length + userName.length + 1}`);
   }
 }
