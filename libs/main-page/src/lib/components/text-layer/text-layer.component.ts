@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { SpanTextDirective } from '../../directives/span-text.directive';
+import { CommandTextDirective } from '../../directives/command-text.directive';
 
 @Component({
   selector: 'app-text-layer',
@@ -8,6 +9,6 @@ import { SpanTextDirective } from '../../directives/span-text.directive';
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [SpanTextDirective],
+  imports: [SpanTextDirective, CommandTextDirective],
 })
 export class TextLayerComponent {}

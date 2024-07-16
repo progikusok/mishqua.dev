@@ -25,7 +25,7 @@
     "pretty": true,
     "removeComments": false,
     "strict": true,
-    "types": ["jest", "node"],
+    "types": ["jest", "node", "telegram-web-app"],
     "typeRoots": ["node_modules/@types"],
     "verbatimModuleSyntax": false,
     "allowUnreachableCode": false,
@@ -34,7 +34,7 @@
     "paths": {
       "@mishqua-dev/common": ["libs/common/src/index.ts"],
       "@mishqua-dev/main-page": ["libs/main-page/src/index.ts"]
-    }
+    },
   },
   "exclude": ["node_modules", "tmp"]
 }
