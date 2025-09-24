@@ -74,3 +74,21 @@
   position: absolute;
   visibility: hidden;
 }
+
+canvas {
+  z-index: 10;
+  image-rendering: pixelated;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.render {
+  position: fixed;
+  top: 0;
+  left: 0;
+  white-space: pre;
+  letter-spacing: 0.5em;
+
+  font-size: var(--cell-size, 12px);
+}

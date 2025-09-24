@@ -7,6 +7,7 @@ import {
   ElementRef,
   Inject,
   OnDestroy,
+  Renderer2,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -70,6 +71,7 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
+    private readonly renderer: Renderer2,
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly hostElement: ElementRef<HTMLElement>,
     private readonly uiStateHandlerService: UiStateHandlerService
@@ -83,7 +85,6 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
   public ngAfterViewInit(): void {
     this.subscription.add(this.subscribeOnWindowSizeChanges());
-
     this.isReady$
       .pipe(
         filter((value: boolean) => value),
@@ -91,10 +92,17 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
         switchMap(() => timer(INIT_ANIMATION_DELAY_MS))
       )
       .subscribe(() => {
-        this.initTextDistortionCanvas();
+        // this.initTextDistortionCanvas();
+        // this.subscription.add(this.produceRequestAnimationFrame());
+        // this.subscription.add(this.subscribeOnPointerMoveChanges());
 
-        this.subscription.add(this.produceRequestAnimationFrame());
-        this.subscription.add(this.subscribeOnPointerMoveChanges());
+        /** New Animation */
+
+        this.initTextDistortionCanvas;
+        this.produceRequestAnimationFrame;
+        this.subscribeOnPointerMoveChanges;
+
+        this.loadScript('assets/scripts/fluid.js');
       });
   }
 
@@ -103,6 +111,13 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
 
     this.uiStateHandlerService.frozeBodyScrolling(false);
     this.uiStateHandlerService.darkenBody(false);
+  }
+
+  private loadScript(scriptUrl: string): void {
+    const script = this.renderer.createElement('script');
+    script.src = scriptUrl;
+    script.type = 'text/javascript';
+    this.renderer.appendChild(this.document.body, script);
   }
 
   private clearGridState(): void {
