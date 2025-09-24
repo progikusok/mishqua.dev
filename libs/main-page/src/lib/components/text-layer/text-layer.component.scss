@@ -73,6 +73,8 @@
   display: flex;
   align-items: baseline;
 
+  opacity: 0;
+
   &::before {
     animation: terminalSpinner 0.8s linear infinite;
     display: block;
