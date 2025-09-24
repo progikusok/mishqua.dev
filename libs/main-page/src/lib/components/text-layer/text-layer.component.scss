@@ -73,7 +73,7 @@
   display: flex;
   align-items: baseline;
 
-  opacity: 0;
+  will-change: opacity;
 
   &::before {
     animation: terminalSpinner 0.8s linear infinite;
@@ -82,6 +82,7 @@
   }
 
   animation: loading 4.2s steps(1) 4s 1 normal both;
+  animation-direction: reverse;
 }
 
 .paragraph {
