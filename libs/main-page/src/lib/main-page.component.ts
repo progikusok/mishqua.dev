@@ -114,7 +114,7 @@ export class MainPageComponent implements AfterViewInit, OnDestroy {
   }
 
   private loadScript(scriptUrl: string): void {
-    const script = this.renderer.createElement('script');
+    const script: HTMLScriptElement = this.renderer.createElement('script');
     script.src = scriptUrl;
     script.type = 'text/javascript';
     this.renderer.appendChild(this.document.body, script);
