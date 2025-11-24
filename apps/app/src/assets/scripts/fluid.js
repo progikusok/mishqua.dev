@@ -902,34 +902,34 @@ function endDrag() {
   scene.obstacleVelY = 0.0;
 }
 
-canvasEl.addEventListener('mousedown', (event) => {
+window.addEventListener('mousedown', (event) => {
   scene.obstacleRadius = 0.0;
   scene.dt = SPEED_1;
   startDrag(event.x, event.y);
 });
 
-canvasEl.addEventListener('mouseup', (event) => {
+window.addEventListener('mouseup', (event) => {
   scene.dt = SPEED_2;
   endDrag();
 });
 
-canvasEl.addEventListener('mousemove', (event) => {
+window.addEventListener('mousemove', (event) => {
   drag(event.x, event.y);
 });
 
-canvasEl.addEventListener('touchstart', (event) => {
+window.addEventListener('touchstart', (event) => {
   event.preventDefault();
   scene.obstacleRadius = 0.0;
   scene.dt = SPEED_1;
   startDrag(event.touches[0].clientX, event.touches[0].clientY);
 });
 
-canvasEl.addEventListener('touchend', (event) => {
+window.addEventListener('touchend', (event) => {
   scene.dt = SPEED_2;
   endDrag();
 });
 
-canvasEl.addEventListener(
+window.addEventListener(
   'touchmove',
   (event) => {
     event.preventDefault();
@@ -979,7 +979,7 @@ async function requestDeviceMotion() {
   }
 }
 
-canvasEl.addEventListener('click', requestDeviceMotion, { once: true });
+window.addEventListener('click', requestDeviceMotion, { once: true });
 document.addEventListener('touchend', requestDeviceMotion, {
   once: true,
 });
